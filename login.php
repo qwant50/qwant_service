@@ -2,6 +2,7 @@
 include_once 'config.php';
 include_once 'session.php';
 
+
 if ((isset($_POST['username'])) && (isset($_POST['password']))) {
     $username = $mysqli->real_escape_string($_POST['username']);   // ?????????? ???????
     $password = $mysqli->real_escape_string($_POST['password']);
@@ -10,13 +11,19 @@ if ((isset($_POST['username'])) && (isset($_POST['password']))) {
     //file_put_contents('log_POST.log', '======== ' . $sql, FILE_APPEND);
     $res = $mysqli->query($sql); //run the query
     $row_cnt = $res->num_rows;
+    if ($row_cnt == 1) {
+        if (startSession()) {
+            $_SESSION['login_user'] = $username;
+            $row = $res->fetch_assoc();
+            var_dump($row);
+            $_SESSION['role'] = $row['role'];
+            header('Location: ' . 'index.php');
+        }
+    } else {
+
+    };
     $res->close();
     if ($mysqli) $mysqli->close();
-    if ($row_cnt == 1) {
-        startSession();
-        $_SESSION['login_user'] = $username;
-        header('Location: ' . 'index.php');
-    }
 };
 ?>
 
@@ -42,7 +49,11 @@ if ((isset($_POST['username'])) && (isset($_POST['password']))) {
 
     <div class="row">
         <div class=" col-md-4 col-md-offset-4">
-
+            <?php
+            if ((isset($_POST['username'])) && (isset($_POST['password']))) {
+                echo '<div class="alert alert-danger" role="alert">Username or password is incorrect!</div>';
+            }
+            ?>
             <div class="panel panel-default">
                 <div class="panel-heading"><strong class="">Login</strong>
                 </div>
@@ -50,7 +61,7 @@ if ((isset($_POST['username'])) && (isset($_POST['password']))) {
                     <form class="form-horizontal" method="post" action="login.php">
                         <div class="panel-body">
                             <div class="form-group input-group">
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
                                 <input type="username" class="form-control" name="username" placeholder="username"
                                        required autofocus>
                             </div>
