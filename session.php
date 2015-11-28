@@ -1,12 +1,12 @@
 <?php
 function startSession($isUserActivity=true, $prefix=null) {
-    $sessionLifetime = 300;
+    $sessionLifetime = 1440;
     $idLifetime = 60;
 
     if ( session_id() ) return true;
     //  session_name('SIDPHP'.($prefix ? '_'.$prefix : ''));
     ini_set('session.cookie_lifetime', 0);
-    if ( ! session_start() ) return '! session_start()';
+    if ( ! session_start() ) return false;
 
     $t = time();
 
@@ -42,5 +42,3 @@ function destroySession() {
         session_destroy();
     }
 }
-
-?>

@@ -23,4 +23,3 @@ $obj = new getConnection();
 $mysqli = $obj->Connect();
 $mysqli->set_charset("utf8");
 
-?>
