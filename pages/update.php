@@ -1,11 +1,10 @@
 <?php
 
-
 startSession();
 // If is user dont login - go to logoin page
 if (!isset($_SESSION['login_user'])) exit(header('location: ../login.php'));
-if (isset($_POST['update'])) {
-    $id_user = (int)$_POST['update'];
+if (isset($_GET['update'])) {
+    $id_user = (int)$_GET['update'];
     $sql = "SELECT * FROM repair_invoice;";
     $res = $mysqli->query($sql);
 
@@ -31,7 +30,7 @@ if (isset($_POST['update'])) {
                             <p>Date in: 2015-10-26 09:27:23 </p>
                         </div>
                         <div class="col-sm-6">
-                            <p>User: Малахов</p>
+                            <p>User: ???????</p>
                         </div>
                     </div>
 
@@ -107,12 +106,12 @@ if (isset($_POST['update'])) {
 
                     <div class="row">
                         <div class="col-sm-1">
-                           Ready
+                            Ready
                         </div>
                         <div class="col-sm-7">
-                                <label checkbox-inline>
-                                    <input type="checkbox"> Date: 2015-10-26 09:27:23 | user: qwant
-                                </label>
+                            <label checkbox-inline>
+                                <input type="checkbox"> Date: 2015-10-26 09:27:23 | user: qwant
+                            </label>
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group form-group-sm ">
@@ -151,3 +150,5 @@ if (isset($_POST['update'])) {
     </div>
 </div>
 <!-- end modal form -->
+
+?>
